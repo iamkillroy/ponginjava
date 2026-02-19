@@ -51,17 +51,16 @@ public class Pong extends JPanel {
                     repaint();
                     ballX = ballX -  0.005 * vxBall;
                     ballY = ballY + 0.005 * vyBall;
-                    if (ballX < 100 && ballX > 70){//we're in the paddle domain
-                        if (humanY < ballY && ballY < humanYBound){
-                            vxBall = -vxBall;
-                            vyBall = -vyBall;
+                    if (ballX < 80 && ballX > 50) {
+                        if (ballY > humanY && ballY < humanY + 70) {
+                            vxBall = vxBall * (Math.random() * 2) - 1;
+                            vyBall = vyBall * (Math.random() * 2) - 1;
                         }
                     }
                     if (ballX > 400 && ballX < 450){//we're in the paddle domain
                         if (ballY > roboY && ballY < (roboY+50)){
-
-                            vxBall = -vxBall;
-                            vyBall = -vyBall;
+                            vxBall = vxBall * (Math.random() * 2) - 1;
+                            vyBall = vyBall * (Math.random() * 2) - 1;
                         }
                     }
                     if (ballY < 0){
