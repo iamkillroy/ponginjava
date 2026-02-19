@@ -72,12 +72,17 @@ public class Pong extends JPanel {
                         vyBall = -vyBall;
                         vxBall = -vxBall;
                     }
-                    if (ballX < 0){//out of bounds from the meathead
+                    if (ballX < 0 || ballX > 500){//out of bounds from the meathead
+                        if (ballX < 0){
+                            roboScore++;
+                        }
+                        else {
+                            meatManScore++;
+                        }
                         ballX = 250;
                         ballY = 250;//reset to initial values
                         vxBall = 0.5;
                         vyBall = 0.5;
-                        roboScore++;
                     }
 
                 }).start();
