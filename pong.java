@@ -8,8 +8,8 @@ public class Pong extends JPanel {
     public double roboY = 100;
     public int humanY = 100;
     public int humanYBound = humanY + 50;
-    public int vxBall = 1;
-    public int vyBall = 1;
+    public double vxBall = 1;
+    public double vyBall = 1;
     public double ballX = 250;
     public double ballY = 250;
 
@@ -18,8 +18,12 @@ public class Pong extends JPanel {
     protected void paintComponent(Graphics g) {
         setBackground(Color.BLACK);  // background color
         super.paintComponent(g);  // clears screen
-        g.setColor(Color.WHITE);
+        g.setColor(Color.RED);
         g.drawRect(50, humanY, 30, 70);
+        g.setColor(Color.BLUE);
+        g.drawRect(350, (int) roboY, 30, 70);
+        g.setColor(Color.WHITE);
+
         g.drawString(meatManScore + " - " + roboScore, 220, 100);
         g.drawRect((int) ballX, (int) ballY, 10, 10);
     }
@@ -39,9 +43,10 @@ public class Pong extends JPanel {
     public void update(){
         while (true){
                 //System.out.println("Delta" + delta + " Last Time " + now);
-                System.out.println(MouseInfo.getPointerInfo().getLocation().y);
+                System.out.println(ballX);
                 humanY = MouseInfo.getPointerInfo().getLocation().y;
                 humanYBound = humanY + 50;
+                roboY = 0.7  *(ballY - 25);
                 new Timer(500, e -> {
                     repaint();
                     ballX = ballX -  0.005 * vxBall;
@@ -52,7 +57,29 @@ public class Pong extends JPanel {
                             vyBall = -vyBall;
                         }
                     }
-                    
+                    if (ballX > 400 && ballX < 450){//we're in the paddle domain
+                        if (ballY > roboY && ballY < (roboY+50)){
+
+                            vxBall = -vxBall;
+                            vyBall = -vyBall;
+                        }
+                    }
+                    if (ballY < 0){
+                        vyBall = -vyBall;
+                        vxBall = -vxBall;
+                    }
+                    if (ballY > 500){
+                        vyBall = -vyBall;
+                        vxBall = -vxBall;
+                    }
+                    if (ballX < 0){//out of bounds from the meathead
+                        ballX = 250;
+                        ballY = 250;//reset to initial values
+                        vxBall = 0.5;
+                        vyBall = 0.5;
+                        roboScore++;
+                    }
+
                 }).start();
         }
 
