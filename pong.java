@@ -7,11 +7,11 @@ public class Pong extends JPanel {
     public int meatManScore = 0;
     public double roboY = 100;
     public int humanY = 100;
-
-    final int FPS = 60;
-    final double nsPerUpdate = 1000000000.0 / FPS;
-    long lastTime = System.nanoTime();
-    double delta = 0;
+    public int humanYBound = humanY + 50;
+    public int vxBall = 1;
+    public int vyBall = 1;
+    public double ballX = 250;
+    public double ballY = 250;
 
 
 	@Override
@@ -21,7 +21,7 @@ public class Pong extends JPanel {
         g.setColor(Color.WHITE);
         g.drawRect(50, humanY, 30, 70);
         g.drawString(meatManScore + " - " + roboScore, 220, 100);
-
+        g.drawRect((int) ballX, (int) ballY, 10, 10);
     }
     public static void main(String[] args) {
         JFrame frame = new JFrame("Pong - by Lucas Frias");
@@ -38,14 +38,21 @@ public class Pong extends JPanel {
 
     public void update(){
         while (true){
-                long now = System.nanoTime();
-                delta += (now - lastTime) / nsPerUpdate;
                 //System.out.println("Delta" + delta + " Last Time " + now);
                 System.out.println(MouseInfo.getPointerInfo().getLocation().y);
                 humanY = MouseInfo.getPointerInfo().getLocation().y;
-                lastTime = now;
+                humanYBound = humanY + 50;
                 new Timer(500, e -> {
                     repaint();
+                    ballX = ballX -  0.005 * vxBall;
+                    ballY = ballY + 0.005 * vyBall;
+                    if (ballX < 100 && ballX > 70){//we're in the paddle domain
+                        if (humanY < ballY && ballY < humanYBound){
+                            vxBall = -vxBall;
+                            vyBall = -vyBall;
+                        }
+                    }
+                    
                 }).start();
         }
 
