@@ -1,0 +1,20 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class BOTW extends JPanel {
+	@Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);  // clears screen
+    }
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Java2D Hello");
+        BOTW panel = new BOTW();
+
+        frame.setSize(600, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(panel);
+        frame.setVisible(true);
+    }
+}
+
+
